@@ -121,7 +121,7 @@ class MemoryTron : AppCompatActivity() {
             fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
             fadeAnimation.start()
         }
-        binding.derrotaimg.visibility= View.GONE
+        //binding.derrotaimg.visibility= View.GONE
             Glide.with(this)
                 .load(R.drawable.hksad)
                 .into(binding.derrotaimg)
