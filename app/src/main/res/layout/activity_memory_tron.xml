@@ -25,28 +25,13 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_weight="4">
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Jugar de nuevo"
-                    android:textSize="20sp"
-                    android:visibility="invisible"
-                    android:backgroundTint="#DF53FA">
-
-                </com.google.android.material.button.MaterialButton>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="2">
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="30sp"
                     android:textColor="@color/white"
-                    android:text="Vidas"
-                    android:gravity="end">
+                    android:text="Memorytron"
+                    android:gravity="center">
 
                 </com.google.android.material.textview.MaterialTextView>
             </LinearLayout>
@@ -54,14 +39,46 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_weight="1">
+                android:layout_weight="4">
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="match_parent"
+                    android:id="@+id/vida1"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:src="@drawable/corazoncito">
-
                 </com.google.android.material.imageview.ShapeableImageView>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/vida2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/corazoncito">
+                </com.google.android.material.imageview.ShapeableImageView>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/vida3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/corazoncito">
+                </com.google.android.material.imageview.ShapeableImageView>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/vida4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/corazoncito">
+                </com.google.android.material.imageview.ShapeableImageView>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/vida5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/corazoncito">
+                </com.google.android.material.imageview.ShapeableImageView>
+
+
             </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -209,11 +226,58 @@
     </LinearLayout>
     </LinearLayout>
 
-        <ImageView
-            android:id="@+id/derrotaimg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ImageView>
+    <ImageView
+        android:id="@+id/derrotaimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </ImageView>
+    <ImageView
+        android:id="@+id/victoriaimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </ImageView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnJugardenuevo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Volver a jugar"
+        android:backgroundTint="#1CFB00"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:layout_margin="15dp"
+        app:layout_constraintVertical_bias="0.82"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </com.google.android.material.button.MaterialButton>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSalir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Salir"
+        android:backgroundTint="#FF0000"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:layout_margin="15dp"
+        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </com.google.android.material.button.MaterialButton>
 
 
 

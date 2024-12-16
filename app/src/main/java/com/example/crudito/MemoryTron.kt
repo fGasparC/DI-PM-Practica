@@ -16,13 +16,15 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.drawToBitmap
 import com.bumptech.glide.Glide
 import com.example.crudito.databinding.ActivityMemoryTronBinding
-
+import com.google.android.material.imageview.ShapeableImageView
 
 
 class MemoryTron : AppCompatActivity() {
     private lateinit var binding: ActivityMemoryTronBinding
+    private lateinit var vidasImg: MutableList<ShapeableImageView>
     var contador = 0
     var vidas = 5
+    var aciertos=0
     var cartasEncontradas = mutableListOf<ImageButton?>()
     var imagenesEncontradas = arrayOfNulls<Int>(2)
     var cartaSeleccionadas = arrayOfNulls<ImageButton>(2)
@@ -32,7 +34,13 @@ class MemoryTron : AppCompatActivity() {
         setContentView(binding.root)
 
         //Creamos una array con 12 cartas de 6 tipos.
-        var contador = 0
+        //var contador = 0
+        vidasImg =mutableListOf(
+            binding.vida1,
+            binding.vida2,
+            binding.vida3,
+            binding.vida4,
+            binding.vida5)
         var baraja = mutableListOf(
             binding.cartita1,
             binding.cartita2,
@@ -45,8 +53,7 @@ class MemoryTron : AppCompatActivity() {
             binding.cartita9,
             binding.cartita10,
             binding.cartita11,
-            binding.cartita12
-        )
+            binding.cartita12)
         var barajaReversa = mutableListOf(
             R.drawable.hkbazooka,
             R.drawable.hkbazooka,
@@ -59,11 +66,38 @@ class MemoryTron : AppCompatActivity() {
             R.drawable.hklanzallamas,
             R.drawable.hklanzallamas,
             R.drawable.hkespadas,
-            R.drawable.hkespadas
-        )
+            R.drawable.hkespadas)
         barajaReversa.shuffle()
         for (i in 0 until baraja.size) {
             voltearCarta(baraja, barajaReversa, i)
+        }
+        binding.btnJugardenuevo.setOnClickListener{
+            for(i in vidasImg){
+                i.setImageResource(R.drawable.corazoncito)
+            }
+            for(i in baraja){
+                    i.isClickable = true
+                    i.setImageResource(R.drawable.reversocartaa)
+                    val fadeAnimation = ObjectAnimator.ofFloat(i, "alpha", 0f, 1f)
+                    fadeAnimation.duration = 1000 // Duración de la animación en milisegundos
+                    fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
+                    fadeAnimation.start()
+            }
+            binding.victoriaimg.visibility=View.GONE
+            binding.derrotaimg.visibility=View.GONE
+            binding.btnJugardenuevo.visibility=View.GONE
+            binding.btnSalir.visibility=View.GONE
+            contador = 0
+            vidas = 5
+            aciertos=0
+            cartasEncontradas = mutableListOf<ImageButton?>()
+            barajaReversa.shuffle()
+            for (i in 0 until baraja.size) {
+                voltearCarta(baraja, barajaReversa, i)
+            }
+        }
+        binding.btnSalir.setOnClickListener{
+            finish()
         }
 
 
@@ -85,8 +119,11 @@ class MemoryTron : AppCompatActivity() {
                     Log.d("Carta encontrada", cartasEncontradas[0].toString())
                     cartasEncontradas.add(cartaSeleccionadas[1])
                     Log.d("Carta encontrada", cartasEncontradas[1].toString())
+                    aciertos++
+                    if(aciertos==6) victoria(a)
                 } else {
                     vidas--
+                    vidasImg[vidas].setImageDrawable(null)
                     Log.d("vidas", vidas.toString())
                     if(vidas==0) derrota(a)
                 }
@@ -121,9 +158,28 @@ class MemoryTron : AppCompatActivity() {
             fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
             fadeAnimation.start()
         }
+        binding.derrotaimg.visibility=View.VISIBLE
+        binding.btnJugardenuevo.visibility=View.VISIBLE
+        binding.btnSalir.visibility=View.VISIBLE
         //binding.derrotaimg.visibility= View.GONE
             Glide.with(this)
                 .load(R.drawable.hksad)
                 .into(binding.derrotaimg)
+
+    }
+    fun victoria(a: MutableList<ImageButton>){
+        for(i in a){
+            i.isClickable=false
+            val fadeAnimation = ObjectAnimator.ofFloat(i, "alpha", 1f, 0f)
+            fadeAnimation.duration = 1000 // Duración de la animación en milisegundos
+            fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
+            fadeAnimation.start()
+        }
+        binding.victoriaimg.visibility=View.VISIBLE
+        binding.btnJugardenuevo.visibility=View.VISIBLE
+        binding.btnSalir.visibility=View.VISIBLE
+        Glide.with(this)
+            .load(R.drawable.hkhappy)
+            .into(binding.victoriaimg)
     }
 }
