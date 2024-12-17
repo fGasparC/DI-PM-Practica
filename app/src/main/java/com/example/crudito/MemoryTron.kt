@@ -26,9 +26,6 @@ class MemoryTron : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMemoryTronBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //Creamos una array con 12 cartas de 6 tipos.
-        //var contador = 0
         vidasImg =mutableListOf(
             binding.vida1,
             binding.vida2,
@@ -105,7 +102,7 @@ class MemoryTron : AppCompatActivity() {
 
     fun voltearCarta(a: MutableList<ImageButton>, b: MutableList<Int>, i: Int) {
         a[i].setOnClickListener {
-            val rotationAnimator = ObjectAnimator.ofFloat(a[i], "rotationY", 90f, 180f)
+            val rotationAnimator = ObjectAnimator.ofFloat(a[i], "rotationY", 270f, 360f)
             rotationAnimator.duration = 300 // Duración en milisegundos
             rotationAnimator.start()
             a[i].setImageResource(b[i])

@@ -1,8 +1,12 @@
 package com.example.crudito
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,12 +18,30 @@ import kotlin.random.Random
 class CalculaTron : AppCompatActivity() {
     private lateinit var binding: ActivityCalculaTronBinding
     private lateinit var res: String
-    var min=1000
+    private lateinit var operaciones: String
+    private lateinit var sP: SharedPreferences
+    var min=0
     var max=10000
     var aciertos=0
     var fallos=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sP=getSharedPreferences("Ajustes",MODE_PRIVATE)
+        min=sP.getInt("minimo",0)
+        max=sP.getInt("maximo",10)
+        operaciones= sP.getString("Operaciones","+ -").toString()
+        Log.d("operaciones", operaciones)
+        var timer=sP.getInt("timer",20)
+        object : CountDownTimer((timer*1000).toLong(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                timer-=1
+                binding.timer.text=timer.toString()
+            }
+            override fun onFinish() {
+                println("holita")
+                //Llevar a la activity de los resultados
+            }
+        }.start()
         res=""
         binding = ActivityCalculaTronBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -77,7 +99,7 @@ class CalculaTron : AppCompatActivity() {
             escribirRes()
         }
         binding.minus.setOnClickListener{
-            res+="-"
+            res="-"
             escribirRes()
         }
         binding.ajustes.setOnClickListener{
@@ -85,22 +107,32 @@ class CalculaTron : AppCompatActivity() {
             startActivity(intent)
         }
         binding.igual.setOnClickListener{
-            //Evaluar resultado
-            binding.operacionPasada.text="${binding.operacionActual.text}${binding.resultado.text}"
-            binding.operacionActual.text="${binding.operacionSiguiente.text}"
-            binding.operacionSiguiente.text=generarOperacion()
-            res=""
-            escribirRes()
-            if(!evaluarOperacion(binding.operacionPasada.text.toString())) {
-                binding.evaluacionOperacionImagen.setImageResource(R.drawable.hkincorrecto)
-                fallos++
-                binding.contadorFallos.text=fallos.toString()
+            if(res=="" || res=="-"){
+                Toast.makeText(this, "Resuelve la operación", Toast.LENGTH_SHORT).show()
+            }
+            if(res=="-0"){
+                Toast.makeText(this, "En aritmetica ordinaria no existe 0 negativo.", Toast.LENGTH_SHORT).show()
+                res=""
+                escribirRes()
             }
             else{
-                binding.evaluacionOperacionImagen.setImageResource(R.drawable.hkcorrecto)
-                aciertos++
-                binding.contadorAciertos.text=aciertos.toString()
+                binding.operacionPasada.text="${binding.operacionActual.text}${binding.resultado.text}"
+                binding.operacionActual.text="${binding.operacionSiguiente.text}"
+                binding.operacionSiguiente.text=generarOperacion()
+                res=""
+                escribirRes()
+                if(!evaluarOperacion(binding.operacionPasada.text.toString())) {
+                    binding.evaluacionOperacionImagen.setImageResource(R.drawable.hkincorrecto)
+                    fallos++
+                    binding.contadorFallos.text=fallos.toString()
+                }
+                else{
+                    binding.evaluacionOperacionImagen.setImageResource(R.drawable.hkcorrecto)
+                    aciertos++
+                    binding.contadorAciertos.text=aciertos.toString()
+                }
             }
+
         }
     }
     fun escribirRes(){
@@ -110,7 +142,7 @@ class CalculaTron : AppCompatActivity() {
         return Random.nextInt(min,max)
     }
     fun generarSimboloRandom():String{
-        return "-"
+        return operaciones.split(" ").random()
     }
     fun generarOperacion(): String{
         return ("${generaNumeroRandom()} ${generarSimboloRandom()} ${generaNumeroRandom()} = ")

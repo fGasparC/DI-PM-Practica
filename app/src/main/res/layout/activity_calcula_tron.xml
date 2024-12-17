@@ -8,6 +8,7 @@
     android:background="@color/black"
     tools:context=".CalculaTron">
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/timer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="35sp"
@@ -114,10 +115,12 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/operacionActual"
             android:layout_width="0dp"
+            android:background="#2A2626"
+            android:textStyle="bold"
             android:layout_height="match_parent"
             android:textColor="#FF00E8"
-            android:gravity="center"
-            android:layout_weight="2"
+            android:gravity="end"
+            android:layout_weight="1"
             android:textSize="30sp"
             android:text="Operacion">
 
@@ -126,8 +129,11 @@
             android:id="@+id/resultado"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="#2A2626"
+            android:gravity="start"
+            android:textStyle="bold"
             android:textColor="#FF00E8"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:layout_weight="1">
 
         </com.google.android.material.textview.MaterialTextView>
@@ -157,12 +163,7 @@
             android:text="Nueva operacion">
 
         </com.google.android.material.textview.MaterialTextView>
-        <com.google.android.material.imageview.ShapeableImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
 
-        </com.google.android.material.imageview.ShapeableImageView>
 
     </LinearLayout>
     <LinearLayout
