@@ -5,35 +5,154 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".Ajustes">
-<com.google.android.material.switchmaterial.SwitchMaterial
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Multiplicacion "
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintVertical_bias="0.15">
-</com.google.android.material.switchmaterial.SwitchMaterial>
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Suma "
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.10">
-    </com.google.android.material.switchmaterial.SwitchMaterial>
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resta "
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.05">
-    </com.google.android.material.switchmaterial.SwitchMaterial>
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="#FF00E9"
+            android:textStyle="bold"
+            android:text="Configuracion"
+            android:textSize="25sp">
+        </com.google.android.material.textview.MaterialTextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/valorCuentaAtras"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="#FF00E9"
+            android:hint="Duracion de la cuenta atras">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/valorCuentaAtrasET"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#FF00E9"
+                android:maxLength="3"
+                android:inputType="numberDecimal">
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/valorMin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="#FF00E9"
+            android:hint="Valor minimo">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/valorMinET"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#FF00E9"
+                android:maxLength="3"
+                android:inputType="numberDecimal">
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/valorMax"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColorHint="#FF00E9"
+            android:hint="Valor maximo">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/valorMaxET"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#FF00E9"
+                android:maxLength="3"
+                android:inputType="numberDecimal">
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1">
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbsuma"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:buttonIcon="@string/fab_transformation_scrim_behavior"
+            android:buttonTint="#FF00E9"
+            android:textColor="#FF00E9"
+            android:checked="true"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:text="Suma">
+        </com.google.android.material.checkbox.MaterialCheckBox>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbresta"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:checked="true"
+            app:buttonIcon="@string/fab_transformation_scrim_behavior"
+            android:buttonTint="#FF00E9"
+            android:textColor="#FF00E9"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:text="Resta">
+        </com.google.android.material.checkbox.MaterialCheckBox>
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbmultiplicacion"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:buttonIcon="@string/fab_transformation_scrim_behavior"
+            android:buttonTint="#FF00E9"
+            android:textColor="#FF00E9"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:text="Multiplicacion">
+
+        </com.google.android.material.checkbox.MaterialCheckBox>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:layout_weight="5">
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35sp"
+            android:backgroundTint="#FF00E9"
+            android:text="Guardar opciones">
+
+        </com.google.android.material.button.MaterialButton>
+    </LinearLayout>
+</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

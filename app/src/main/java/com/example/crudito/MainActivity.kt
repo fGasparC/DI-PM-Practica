@@ -2,6 +2,7 @@ package com.example.crudito
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,8 +19,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val boton1=findViewById<MaterialButton>(R.id.mainBoton1)
-        val boton2=findViewById<MaterialButton>(R.id.mainboton2)
+        val boton1=findViewById<ImageButton>(R.id.mainBoton1)
+        val boton2=findViewById<ImageButton>(R.id.mainBoton2)
         boton1.setOnClickListener{
             val intent= Intent(this,MemoryTron::class.java)
             startActivity(intent)

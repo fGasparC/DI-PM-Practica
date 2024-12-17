@@ -1,22 +1,16 @@
 package com.example.crudito
 
 import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
-import android.media.Image
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.drawToBitmap
 import com.bumptech.glide.Glide
 import com.example.crudito.databinding.ActivityMemoryTronBinding
 import com.google.android.material.imageview.ShapeableImageView
+
 
 
 class MemoryTron : AppCompatActivity() {
@@ -73,15 +67,21 @@ class MemoryTron : AppCompatActivity() {
         }
         binding.btnJugardenuevo.setOnClickListener{
             for(i in vidasImg){
+                i.animate()
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .rotation(0f)
+                    .setDuration(1000)
                 i.setImageResource(R.drawable.corazoncito)
+
             }
             for(i in baraja){
-                    i.isClickable = true
-                    i.setImageResource(R.drawable.reversocartaa)
-                    val fadeAnimation = ObjectAnimator.ofFloat(i, "alpha", 0f, 1f)
-                    fadeAnimation.duration = 1000 // Duración de la animación en milisegundos
-                    fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
-                    fadeAnimation.start()
+                i.isClickable = true
+                i.setImageResource(R.drawable.reversocartaa)
+                val fadeAnimation = ObjectAnimator.ofFloat(i, "alpha", 0f, 1f)
+                fadeAnimation.duration = 1000 // Duración de la animación en milisegundos
+                fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
+                fadeAnimation.start()
             }
             binding.victoriaimg.visibility=View.GONE
             binding.derrotaimg.visibility=View.GONE
@@ -105,6 +105,9 @@ class MemoryTron : AppCompatActivity() {
 
     fun voltearCarta(a: MutableList<ImageButton>, b: MutableList<Int>, i: Int) {
         a[i].setOnClickListener {
+            val rotationAnimator = ObjectAnimator.ofFloat(a[i], "rotationY", 90f, 180f)
+            rotationAnimator.duration = 300 // Duración en milisegundos
+            rotationAnimator.start()
             a[i].setImageResource(b[i])
             contador++
             a[i].isClickable = false
@@ -123,7 +126,15 @@ class MemoryTron : AppCompatActivity() {
                     if(aciertos==6) victoria(a)
                 } else {
                     vidas--
-                    vidasImg[vidas].setImageDrawable(null)
+                    vidasImg[vidas].animate()
+                        .scaleX(0f)
+                        .scaleY(0f)
+                        .rotation(720f)
+                        .setDuration(1000)
+                        .withEndAction {
+                            vidasImg[vidas].setImageDrawable(null)
+                        }
+                        .start()
                     Log.d("vidas", vidas.toString())
                     if(vidas==0) derrota(a)
                 }
@@ -162,9 +173,9 @@ class MemoryTron : AppCompatActivity() {
         binding.btnJugardenuevo.visibility=View.VISIBLE
         binding.btnSalir.visibility=View.VISIBLE
         //binding.derrotaimg.visibility= View.GONE
-            Glide.with(this)
-                .load(R.drawable.hksad)
-                .into(binding.derrotaimg)
+        Glide.with(this)
+            .load(R.drawable.hksad)
+            .into(binding.derrotaimg)
 
     }
     fun victoria(a: MutableList<ImageButton>){
