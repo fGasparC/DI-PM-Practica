@@ -26,20 +26,28 @@ class CalculaTron : AppCompatActivity() {
     var fallos=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val intent=Intent(this,PantallaResultado::class.java)
+
         sP=getSharedPreferences("Ajustes",MODE_PRIVATE)
+        var aciertosTotales=sP.getInt("aciertosTotales",0)
+        var fallosTotales=sP.getInt("fallosTotales",0)
         min=sP.getInt("minimo",0)
         max=sP.getInt("maximo",10)
         operaciones= sP.getString("Operaciones","+ -").toString()
-        Log.d("operaciones", operaciones)
         var timer=sP.getInt("timer",20)
+
         object : CountDownTimer((timer*1000).toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timer-=1
                 binding.timer.text=timer.toString()
             }
             override fun onFinish() {
-                println("holita")
-                //Llevar a la activity de los resultados
+                sP.edit().putInt("fallos",fallos).apply()
+                sP.edit().putInt("aciertos",aciertos).apply()
+                sP.edit().putInt("aciertosTotales",(aciertos+aciertosTotales)).apply()
+                sP.edit().putInt("fallosTotales",(fallos+fallosTotales)).apply()
+                startActivity(intent)
             }
         }.start()
         res=""

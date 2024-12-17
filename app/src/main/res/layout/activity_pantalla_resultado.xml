@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".PantallaResultado">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/resultadoPartida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="35dp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="#FF00E8"
+        android:text="Resultado partida"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.1">
+
+    </com.google.android.material.textview.MaterialTextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.20">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/hkcorrecto">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/contadorAciertosPartida"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#FF00E8"
+            android:layout_weight="1"
+            android:textSize="60sp"
+            android:gravity="bottom"
+            android:text="0">
+
+        </com.google.android.material.textview.MaterialTextView>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/hkincorrecto">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/contadorFallosPartida"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#FF00E8"
+            android:textSize="60sp"
+            android:gravity="bottom"
+            android:text="0">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+    </LinearLayout>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/resultadoGlobal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="35dp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="#FF00E8"
+        android:text="Resultado Total"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.35">
+
+    </com.google.android.material.textview.MaterialTextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.47">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/hkcorrecto">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/contadorAciertosGlobales"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="#FF00E8"
+            android:layout_weight="1"
+            android:textSize="60sp"
+            android:gravity="bottom"
+            android:text="0">
+
+        </com.google.android.material.textview.MaterialTextView>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/hkincorrecto">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/contadorFallosGlobales"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="#FF00E8"
+            android:textSize="60sp"
+            android:gravity="bottom"
+            android:text="0">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+    </LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVolverJugar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver a jugar"
+        android:layout_margin="30dp"
+        android:textSize="25sp"
+        android:backgroundTint="#FF00E8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.7">
+
+    </com.google.android.material.button.MaterialButton>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver al menu"
+        android:layout_margin="30dp"
+        android:textSize="25sp"
+        android:backgroundTint="#FF00E8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.85">
+
+    </com.google.android.material.button.MaterialButton>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
