@@ -117,13 +117,16 @@ class CalculaTron : AppCompatActivity() {
         binding.igual.setOnClickListener{
             if(res=="" || res=="-"){
                 Toast.makeText(this, "Resuelve la operación", Toast.LENGTH_SHORT).show()
+                res=""
+                escribirRes()
             }
-            if(res=="-0"){
+            else if(res=="-0"){
                 Toast.makeText(this, "En aritmetica ordinaria no existe 0 negativo.", Toast.LENGTH_SHORT).show()
                 res=""
                 escribirRes()
             }
             else{
+                Log.d("Estoy pasando por aqui","hola")
                 binding.operacionPasada.text="${binding.operacionActual.text}${binding.resultado.text}"
                 binding.operacionActual.text="${binding.operacionSiguiente.text}"
                 binding.operacionSiguiente.text=generarOperacion()
