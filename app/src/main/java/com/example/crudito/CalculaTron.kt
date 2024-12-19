@@ -1,16 +1,20 @@
 package com.example.crudito
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.SoundPool
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Vibrator
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.example.crudito.databinding.ActivityCalculaTronBinding
 import com.example.crudito.databinding.ActivityMemoryTronBinding
 import kotlin.random.Random
@@ -20,14 +24,34 @@ class CalculaTron : AppCompatActivity() {
     private lateinit var res: String
     private lateinit var operaciones: String
     private lateinit var sP: SharedPreferences
+    private lateinit var coin: SoundPool
+    private lateinit var error: SoundPool
+    private lateinit var vibrator: Vibrator
+    private var coinId= 0
+    private var errorId=0
+
     var min=0
     var max=10000
     var aciertos=0
     var fallos=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
+        binding = ActivityCalculaTronBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         val intent=Intent(this,PantallaResultado::class.java)
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        coin= SoundPool.Builder().setMaxStreams(1).build()
+        coinId = coin.load(this, R.raw.coin, 1)
+
+        error= SoundPool.Builder().setMaxStreams(1).build()
+        errorId= error.load(this, R.raw.error, 1)
 
         sP=getSharedPreferences("Ajustes",MODE_PRIVATE)
         var aciertosTotales=sP.getInt("aciertosTotales",0)
@@ -52,8 +76,7 @@ class CalculaTron : AppCompatActivity() {
             }
         }.start()
         res=""
-        binding = ActivityCalculaTronBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
 
         binding.operacionActual.text=generarOperacion()
         binding.operacionSiguiente.text=generarOperacion()
@@ -118,6 +141,7 @@ class CalculaTron : AppCompatActivity() {
             startActivity(intent)
         }
         binding.igual.setOnClickListener{
+            vibrator.vibrate(200)
             if(res=="" || res=="-"){
                 Toast.makeText(this, "Resuelve la operación", Toast.LENGTH_SHORT).show()
                 res=""
@@ -129,19 +153,30 @@ class CalculaTron : AppCompatActivity() {
                 escribirRes()
             }
             else{
-                Log.d("Estoy pasando por aqui","hola")
+                val fadeAnimation = ObjectAnimator.ofFloat(binding.operacionSiguiente, "alpha", 0f, 1f)
+                fadeAnimation.duration = 500 // Duración de la animación en milisegundos
+                fadeAnimation.start()
+                val fadeAnimation2 = ObjectAnimator.ofFloat(binding.operacionPasada, "alpha", 0f, 1f)
+                fadeAnimation2.duration = 500 // Duración de la animación en milisegundos
+                fadeAnimation2.start()
                 binding.operacionPasada.text="${binding.operacionActual.text}${binding.resultado.text}"
                 binding.operacionActual.text="${binding.operacionSiguiente.text}"
                 binding.operacionSiguiente.text=generarOperacion()
                 res=""
                 escribirRes()
                 if(!evaluarOperacion(binding.operacionPasada.text.toString())) {
-                    binding.evaluacionOperacionImagen.setImageResource(R.drawable.hkincorrecto)
+                    error.play(errorId, 1f, 1f, 1, 0, 1f)
+                    Glide.with(this)
+                        .load(R.drawable.hksad)
+                        .into(binding.evaluacionOperacionImagen)
                     fallos++
                     binding.contadorFallos.text=fallos.toString()
                 }
                 else{
-                    binding.evaluacionOperacionImagen.setImageResource(R.drawable.hkcorrecto)
+                    coin.play(coinId, 1f, 1f, 1, 0, 1f)
+                    Glide.with(this)
+                        .load(R.drawable.hkhappy2)
+                        .into(binding.evaluacionOperacionImagen)
                     aciertos++
                     binding.contadorAciertos.text=aciertos.toString()
                 }
