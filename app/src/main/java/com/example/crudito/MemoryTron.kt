@@ -1,9 +1,11 @@
 package com.example.crudito
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Vibrator
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
@@ -18,6 +20,7 @@ class MemoryTron : AppCompatActivity() {
     private lateinit var mP: MediaPlayer
     private lateinit var binding: ActivityMemoryTronBinding
     private lateinit var vidasImg: MutableList<ShapeableImageView>
+    private lateinit var vibrator: Vibrator
     var contador = 0
     var vidas = 5
     var aciertos=0
@@ -28,6 +31,7 @@ class MemoryTron : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMemoryTronBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         vidasImg =mutableListOf(
             binding.vida1,
             binding.vida2,
@@ -104,6 +108,7 @@ class MemoryTron : AppCompatActivity() {
 
     fun voltearCarta(a: MutableList<ImageButton>, b: MutableList<Int>, i: Int) {
         a[i].setOnClickListener {
+            vibrator.vibrate(100)
             val rotationAnimator = ObjectAnimator.ofFloat(a[i], "rotationY", 270f, 360f)
             mP=MediaPlayer.create(this,R.raw.flipcard)
             mP.start()
@@ -176,6 +181,7 @@ class MemoryTron : AppCompatActivity() {
         }.start()
     }
     fun derrota(a: MutableList<ImageButton>) {
+        vibrator.vibrate(1000)
         val mP=MediaPlayer.create(this,R.raw.derrota)
         mP.start()
         mP.setOnCompletionListener{
@@ -198,6 +204,7 @@ class MemoryTron : AppCompatActivity() {
 
     }
     fun victoria(a: MutableList<ImageButton>){
+        vibrator.vibrate(1000)
         val mP=MediaPlayer.create(this,R.raw.win)
         mP.start()
         mP.setOnCompletionListener{
