@@ -3,13 +3,17 @@ package com.example.crudito
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.media.MediaPlayer
+import android.media.SoundPool
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Vibrator
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.crudito.databinding.ActivityMemoryTronBinding
 import com.google.android.material.imageview.ShapeableImageView
@@ -17,10 +21,22 @@ import com.google.android.material.imageview.ShapeableImageView
 
 
 class MemoryTron : AppCompatActivity() {
-    private lateinit var mP: MediaPlayer
     private lateinit var binding: ActivityMemoryTronBinding
     private lateinit var vidasImg: MutableList<ShapeableImageView>
     private lateinit var vibrator: Vibrator
+
+    private lateinit var coin: SoundPool
+    private lateinit var derrota: SoundPool
+    private lateinit var error: SoundPool
+    private lateinit var flipcard: SoundPool
+    private lateinit var win: SoundPool
+
+    private var coinId= 0
+    private var derrotaId=0
+    private var errorId=0
+    private var flipcardId=0
+    private var winId=0
+
     var contador = 0
     var vidas = 5
     var aciertos=0
@@ -29,9 +45,34 @@ class MemoryTron : AppCompatActivity() {
     var cartaSeleccionadas = arrayOfNulls<ImageButton>(2)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityMemoryTronBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        coin=SoundPool.Builder().setMaxStreams(1).build()
+        coinId = coin.load(this, R.raw.coin, 1)
+
+        derrota=SoundPool.Builder().setMaxStreams(1).build()
+        derrotaId=derrota.load(this, R.raw.derrota, 1)
+
+        error=SoundPool.Builder().setMaxStreams(1).build()
+        errorId= error.load(this, R.raw.error, 1)
+
+        flipcard=SoundPool.Builder().setMaxStreams(1).build()
+        flipcardId=flipcard.load(this, R.raw.flipcard, 1)
+
+        win=SoundPool.Builder().setMaxStreams(1).build()
+        winId= win.load(this, R.raw.win, 1)
+
+
+
         vidasImg =mutableListOf(
             binding.vida1,
             binding.vida2,
@@ -110,11 +151,7 @@ class MemoryTron : AppCompatActivity() {
         a[i].setOnClickListener {
             vibrator.vibrate(100)
             val rotationAnimator = ObjectAnimator.ofFloat(a[i], "rotationY", 270f, 360f)
-            mP=MediaPlayer.create(this,R.raw.flipcard)
-            mP.start()
-            mP.setOnCompletionListener{
-                mP.release()
-            }
+            flipcard.play(flipcardId, 1f, 1f, 0, 0, 1f)
             rotationAnimator.duration = 300 // Duración en milisegundos
             rotationAnimator.start()
             a[i].setImageResource(b[i])
@@ -127,11 +164,7 @@ class MemoryTron : AppCompatActivity() {
             Log.d("Carta selecionada", cartaSeleccionadas[contador - 1].toString())
             if (contador == 2) {
                 if (imagenesEncontradas[0] == imagenesEncontradas[1]) {
-                    mP=MediaPlayer.create(this,R.raw.coin)
-                    mP.start()
-                    mP.setOnCompletionListener{
-                        mP.release()
-                    }
+                    coin.play(coinId, 1f, 1f, 1, 0, 1f)
                     cartasEncontradas.add(cartaSeleccionadas[0])
                     Log.d("Carta encontrada", cartasEncontradas[0].toString())
                     cartasEncontradas.add(cartaSeleccionadas[1])
@@ -139,11 +172,7 @@ class MemoryTron : AppCompatActivity() {
                     aciertos++
                     if(aciertos==6) victoria(a)
                 } else {
-                    mP=MediaPlayer.create(this,R.raw.error)
-                    mP.start()
-                    mP.setOnCompletionListener{
-                        mP.release()
-                    }
+                    error.play(errorId, 1f, 1f, 1, 0, 1f)
                     vidas--
                     vidasImg[vidas].animate()
                         .scaleX(0f)
@@ -181,6 +210,7 @@ class MemoryTron : AppCompatActivity() {
         }.start()
     }
     fun derrota(a: MutableList<ImageButton>) {
+        derrota.play(derrotaId, 1f, 1f, 2, 0, 1f)
         vibrator.vibrate(1000)
         val mP=MediaPlayer.create(this,R.raw.derrota)
         mP.start()
@@ -204,12 +234,8 @@ class MemoryTron : AppCompatActivity() {
 
     }
     fun victoria(a: MutableList<ImageButton>){
+        win.play(winId, 1f, 1f, 2, 0, 1f)
         vibrator.vibrate(1000)
-        val mP=MediaPlayer.create(this,R.raw.win)
-        mP.start()
-        mP.setOnCompletionListener{
-            mP.release()
-        }
         for(i in a){
             i.isClickable=false
             val fadeAnimation = ObjectAnimator.ofFloat(i, "alpha", 1f, 0f)
