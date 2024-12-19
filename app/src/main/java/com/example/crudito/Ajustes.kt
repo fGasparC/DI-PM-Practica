@@ -67,6 +67,7 @@ class Ajustes : AppCompatActivity() {
                 sP.edit().putString("Operaciones","+").apply()
             }
             val intent= Intent(this,CalculaTron::class.java)
+            this.finish()
             startActivity(intent)
         }
     }

@@ -37,7 +37,7 @@ class CalculaTron : AppCompatActivity() {
         operaciones= sP.getString("Operaciones","+ -").toString()
         var timer=sP.getInt("timer",20)
 
-        object : CountDownTimer((timer*1000).toLong(), 1000) {
+        var contador=object : CountDownTimer((timer*1000).toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timer-=1
                 binding.timer.text=timer.toString()
@@ -47,6 +47,7 @@ class CalculaTron : AppCompatActivity() {
                 sP.edit().putInt("aciertos",aciertos).apply()
                 sP.edit().putInt("aciertosTotales",(aciertos+aciertosTotales)).apply()
                 sP.edit().putInt("fallosTotales",(fallos+fallosTotales)).apply()
+                this@CalculaTron.finish()
                 startActivity(intent)
             }
         }.start()
@@ -112,6 +113,8 @@ class CalculaTron : AppCompatActivity() {
         }
         binding.ajustes.setOnClickListener{
             val intent=Intent(this,Ajustes::class.java)
+            contador.cancel()
+            this.finish()
             startActivity(intent)
         }
         binding.igual.setOnClickListener{

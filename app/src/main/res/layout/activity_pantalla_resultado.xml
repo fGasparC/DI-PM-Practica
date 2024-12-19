@@ -109,7 +109,7 @@
             android:layout_height="match_parent"
             android:textColor="#FF00E8"
             android:layout_weight="1"
-            android:textSize="60sp"
+            android:textSize="40sp"
             android:gravity="bottom"
             android:text="0">
 
@@ -127,7 +127,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="#FF00E8"
-            android:textSize="60sp"
+            android:textSize="40sp"
             android:gravity="bottom"
             android:text="0">
 

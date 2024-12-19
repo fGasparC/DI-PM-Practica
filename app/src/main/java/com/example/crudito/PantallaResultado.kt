@@ -39,10 +39,12 @@ class PantallaResultado : AppCompatActivity() {
         val botonVolverJugar=findViewById<MaterialButton>(R.id.btnVolverJugar)
         botonMenu.setOnClickListener{
             val intent= Intent(this, MainActivity::class.java)
+            this.finish()
             startActivity(intent)
         }
         botonVolverJugar.setOnClickListener{
             val intent= Intent(this, CalculaTron::class.java)
+            this.finish()
             startActivity(intent)
         }
     }

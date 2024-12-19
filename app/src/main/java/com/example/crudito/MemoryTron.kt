@@ -1,6 +1,7 @@
 package com.example.crudito
 
 import android.animation.ObjectAnimator
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -14,6 +15,7 @@ import com.google.android.material.imageview.ShapeableImageView
 
 
 class MemoryTron : AppCompatActivity() {
+    private lateinit var mP: MediaPlayer
     private lateinit var binding: ActivityMemoryTronBinding
     private lateinit var vidasImg: MutableList<ShapeableImageView>
     var contador = 0
@@ -103,6 +105,11 @@ class MemoryTron : AppCompatActivity() {
     fun voltearCarta(a: MutableList<ImageButton>, b: MutableList<Int>, i: Int) {
         a[i].setOnClickListener {
             val rotationAnimator = ObjectAnimator.ofFloat(a[i], "rotationY", 270f, 360f)
+            mP=MediaPlayer.create(this,R.raw.flipcard)
+            mP.start()
+            mP.setOnCompletionListener{
+                mP.release()
+            }
             rotationAnimator.duration = 300 // Duración en milisegundos
             rotationAnimator.start()
             a[i].setImageResource(b[i])
@@ -115,6 +122,11 @@ class MemoryTron : AppCompatActivity() {
             Log.d("Carta selecionada", cartaSeleccionadas[contador - 1].toString())
             if (contador == 2) {
                 if (imagenesEncontradas[0] == imagenesEncontradas[1]) {
+                    mP=MediaPlayer.create(this,R.raw.coin)
+                    mP.start()
+                    mP.setOnCompletionListener{
+                        mP.release()
+                    }
                     cartasEncontradas.add(cartaSeleccionadas[0])
                     Log.d("Carta encontrada", cartasEncontradas[0].toString())
                     cartasEncontradas.add(cartaSeleccionadas[1])
@@ -122,6 +134,11 @@ class MemoryTron : AppCompatActivity() {
                     aciertos++
                     if(aciertos==6) victoria(a)
                 } else {
+                    mP=MediaPlayer.create(this,R.raw.error)
+                    mP.start()
+                    mP.setOnCompletionListener{
+                        mP.release()
+                    }
                     vidas--
                     vidasImg[vidas].animate()
                         .scaleX(0f)
@@ -159,6 +176,11 @@ class MemoryTron : AppCompatActivity() {
         }.start()
     }
     fun derrota(a: MutableList<ImageButton>) {
+        val mP=MediaPlayer.create(this,R.raw.derrota)
+        mP.start()
+        mP.setOnCompletionListener{
+            mP.release()
+        }
         for(i in a){
             i.isClickable=false
             val fadeAnimation = ObjectAnimator.ofFloat(i, "alpha", 1f, 0f)
@@ -176,6 +198,11 @@ class MemoryTron : AppCompatActivity() {
 
     }
     fun victoria(a: MutableList<ImageButton>){
+        val mP=MediaPlayer.create(this,R.raw.win)
+        mP.start()
+        mP.setOnCompletionListener{
+            mP.release()
+        }
         for(i in a){
             i.isClickable=false
             val fadeAnimation = ObjectAnimator.ofFloat(i, "alpha", 1f, 0f)
@@ -183,6 +210,8 @@ class MemoryTron : AppCompatActivity() {
             fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
             fadeAnimation.start()
         }
+
+
         binding.victoriaimg.visibility=View.VISIBLE
         binding.btnJugardenuevo.visibility=View.VISIBLE
         binding.btnSalir.visibility=View.VISIBLE
