@@ -2,12 +2,12 @@ package com.example.crudito
 
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.graphics.Color
 import android.media.MediaPlayer
 import android.media.SoundPool
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Vibrator
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
@@ -110,6 +110,7 @@ class MemoryTron : AppCompatActivity() {
             voltearCarta(baraja, barajaReversa, i)
         }
         binding.btnJugardenuevo.setOnClickListener{
+            vibrator.vibrate(50)
             for(i in vidasImg){
                 i.animate()
                     .scaleX(1f)
@@ -127,6 +128,7 @@ class MemoryTron : AppCompatActivity() {
                 fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
                 fadeAnimation.start()
             }
+            binding.cartelResultado.visibility=View.GONE
             binding.victoriaimg.visibility=View.GONE
             binding.derrotaimg.visibility=View.GONE
             binding.btnJugardenuevo.visibility=View.GONE
@@ -141,6 +143,8 @@ class MemoryTron : AppCompatActivity() {
             }
         }
         binding.btnSalir.setOnClickListener{
+            vibrator.vibrate(50)
+            vibrator.vibrate(50)
             finish()
         }
 
@@ -157,18 +161,13 @@ class MemoryTron : AppCompatActivity() {
             a[i].setImageResource(b[i])
             contador++
             a[i].isClickable = false
-            Log.d("Contador if", contador.toString())
             cartaSeleccionadas[contador - 1] = a[i]
             imagenesEncontradas[contador - 1] = b[i]
-            Log.d("Imagen seleccionada", imagenesEncontradas[contador - 1].toString())
-            Log.d("Carta selecionada", cartaSeleccionadas[contador - 1].toString())
             if (contador == 2) {
                 if (imagenesEncontradas[0] == imagenesEncontradas[1]) {
                     coin.play(coinId, 1f, 1f, 1, 0, 1f)
                     cartasEncontradas.add(cartaSeleccionadas[0])
-                    Log.d("Carta encontrada", cartasEncontradas[0].toString())
                     cartasEncontradas.add(cartaSeleccionadas[1])
-                    Log.d("Carta encontrada", cartasEncontradas[1].toString())
                     aciertos++
                     if(aciertos==6) victoria(a)
                 } else {
@@ -183,7 +182,6 @@ class MemoryTron : AppCompatActivity() {
                             vidasImg[vidas].setImageDrawable(null)
                         }
                         .start()
-                    Log.d("vidas", vidas.toString())
                     if(vidas==0) derrota(a)
                 }
                 for (i in 0 until a.size) {
@@ -224,10 +222,12 @@ class MemoryTron : AppCompatActivity() {
             fadeAnimation.startDelay = 500 // Retraso antes de que comience la animación
             fadeAnimation.start()
         }
+        binding.cartelResultado.text="DERROTA"
+        binding.cartelResultado.setTextColor(Color.RED)
+        binding.cartelResultado.visibility=View.VISIBLE
         binding.derrotaimg.visibility=View.VISIBLE
         binding.btnJugardenuevo.visibility=View.VISIBLE
         binding.btnSalir.visibility=View.VISIBLE
-        //binding.derrotaimg.visibility= View.GONE
         Glide.with(this)
             .load(R.drawable.hksad)
             .into(binding.derrotaimg)
@@ -244,7 +244,9 @@ class MemoryTron : AppCompatActivity() {
             fadeAnimation.start()
         }
 
-
+        binding.cartelResultado.text="VICTORIA"
+        binding.cartelResultado.setTextColor(Color.GREEN)
+        binding.cartelResultado.visibility=View.VISIBLE
         binding.victoriaimg.visibility=View.VISIBLE
         binding.btnJugardenuevo.visibility=View.VISIBLE
         binding.btnSalir.visibility=View.VISIBLE

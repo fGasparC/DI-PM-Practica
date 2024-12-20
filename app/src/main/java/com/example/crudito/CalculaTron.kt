@@ -8,7 +8,6 @@ import android.media.SoundPool
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Vibrator
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.crudito.databinding.ActivityCalculaTronBinding
-import com.example.crudito.databinding.ActivityMemoryTronBinding
 import kotlin.random.Random
 
 class CalculaTron : AppCompatActivity() {
@@ -27,6 +25,7 @@ class CalculaTron : AppCompatActivity() {
     private lateinit var coin: SoundPool
     private lateinit var error: SoundPool
     private lateinit var vibrator: Vibrator
+    private lateinit var contador: CountDownTimer
     private var coinId= 0
     private var errorId=0
 
@@ -61,7 +60,7 @@ class CalculaTron : AppCompatActivity() {
         operaciones= sP.getString("Operaciones","+ -").toString()
         var timer=sP.getInt("timer",20)
 
-        var contador=object : CountDownTimer((timer*1000).toLong(), 1000) {
+         contador=object : CountDownTimer((timer*1000).toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timer-=1
                 binding.timer.text=timer.toString()
@@ -82,59 +81,72 @@ class CalculaTron : AppCompatActivity() {
         binding.operacionSiguiente.text=generarOperacion()
 
         binding.cero.setOnClickListener{
+            vibrator.vibrate(50)
             res+="0"
             escribirRes()
         }
         binding.uno.setOnClickListener{
+            vibrator.vibrate(50)
             res+="1"
             escribirRes()
         }
         binding.dos.setOnClickListener{
+            vibrator.vibrate(50)
             res+="2"
             escribirRes()
         }
         binding.tres.setOnClickListener{
+            vibrator.vibrate(50)
             res+="3"
             escribirRes()
         }
         binding.cuatro.setOnClickListener{
+            vibrator.vibrate(50)
             res+="4"
             escribirRes()
         }
         binding.cinco.setOnClickListener{
+            vibrator.vibrate(50)
             res+="5"
             escribirRes()
         }
         binding.seis.setOnClickListener{
+            vibrator.vibrate(50)
             res+="6"
             escribirRes()
         }
         binding.siete.setOnClickListener{
+            vibrator.vibrate(50)
             res+="7"
             escribirRes()
         }
         binding.ocho.setOnClickListener{
+            vibrator.vibrate(50)
             res+="8"
             escribirRes()
         }
         binding.nueve.setOnClickListener{
+            vibrator.vibrate(50)
             res+="9"
             escribirRes()
-            Log.d("String",res)
         }
         binding.limpiar.setOnClickListener{
+            vibrator.vibrate(50)
             res=""
             escribirRes()
         }
         binding.atras.setOnClickListener{
+            vibrator.vibrate(50)
             res=res.dropLast(1)
             escribirRes()
         }
         binding.minus.setOnClickListener{
+            vibrator.vibrate(50)
             res="-"
             escribirRes()
         }
         binding.ajustes.setOnClickListener{
+            vibrator.vibrate(50)
             val intent=Intent(this,Ajustes::class.java)
             contador.cancel()
             this.finish()
@@ -217,5 +229,9 @@ class CalculaTron : AppCompatActivity() {
             else return false
         }
         else return false
+    }
+    override fun onBackPressed() {
+        contador.cancel()
+        super.onBackPressed()
     }
 }

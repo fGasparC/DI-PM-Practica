@@ -213,6 +213,23 @@
     </LinearLayout>
     </LinearLayout>
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/cartelResultado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="60sp"
+        android:text=""
+        android:background="#29090909"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </com.google.android.material.textview.MaterialTextView>
     <ImageView
         android:id="@+id/derrotaimg"
         android:layout_width="match_parent"

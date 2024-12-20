@@ -1,8 +1,10 @@
 package com.example.crudito
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Vibrator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,8 +15,10 @@ import com.example.crudito.databinding.ActivityMemoryTronBinding
 class Ajustes : AppCompatActivity() {
     private lateinit var binding: ActivityAjustesBinding
     private lateinit var sP: SharedPreferences
+    private lateinit var vibrator: Vibrator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         sP=getSharedPreferences("Ajustes",MODE_PRIVATE)
         binding = ActivityAjustesBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -24,6 +28,7 @@ class Ajustes : AppCompatActivity() {
         var timer=sP.getInt("timer",20)
 
         binding.guardarOpciones.setOnClickListener{
+            vibrator.vibrate(50)
             if(binding.valorMinET.text?.isNotEmpty()!!){
                 min=binding.valorMinET.text.toString().toInt()
                 if(min<0){
